@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hangman Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="top-bar">
+    <h1>Hangman Game</h1>
+    <div id="top-buttons">
+      <button class="top-btn" onclick="showDashboard()">📊 Dashboard</button>
+      <button class="top-btn" onclick="showLeaderboard()">🏆 Leaderboard</button>
+      <button class="top-btn" onclick="showSettings()">⚙️ Settings</button>
+      <button class="top-btn logout" onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+  <p id="player-name"></p>
+
+  <!-- Category Selection -->
+  <div id="category-screen">
+    <h2>Choose a Category</h2>
+    <button class="category-btn" onclick="showLevelScreen('computer')">💻 Computer Fundamentals</button>
+    <button class="category-btn" onclick="showLevelScreen('lifestyle')">🏃Lifestyle</button>
+  </div>
+
+  <!-- Level Selection Screen -->
+  <div id="level-screen" style="display:none;">
+    <h2>Select Level</h2>
+    <p id="level-category-name"></p>
+    <div id="level-grid"></div>
+    <button class="back-btn" onclick="showCategories()">⬅ Back</button>
+  </div>
+  <!-- Game Screen -->
+  <div id="game-screen" style="display:none;">
+    <p id="riddle-text"></p>
+    <canvas id="hangman-canvas" width="200" height="250"></canvas>
+    <p id="wrong-count">Wrong guesses: 0 / 6</p>
+    <div id="word-display"></div>
+    <div id="keyboard"></div>
+    <p id="message"></p>
+    <button id="restart-btn" onclick="showCategories()">Choose Another Category</button>
+    <button id="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard">
+    <div class="dash-item">
+      <span class="dash-icon">⭐</span>
+      <span class="dash-label">Level</span>
+      <span class="dash-value" id="dash-level">1</span>
+    </div>
+    <div class="dash-item">
+      <span class="dash-icon">🪙</span>
+      <span class="dash-label">Coins</span>
+      <span class="dash-value" id="dash-coins">0</span>
+    </div>
+    <div class="dash-item">
+      <span class="dash-icon">🏆</span>
+      <span class="dash-label">Wins</span>
+      <span class="dash-value" id="dash-wins">0</span>
+    </div>
+    <div class="dash-item">
+      <span class="dash-icon">❌</span>
+      <span class="dash-label">Losses</span>
+      <span class="dash-value" id="dash-losses">0</span>
+    </div>
+  </div>
+  <!-- Dashboard Popup -->
+  <div id="dashboard-popup" style="display:none;">
+    <div class="modal-box">
+      <h2>📊 Dashboard</h2>
+      <div id="dashboard-content"></div>
+      <button onclick="closeModal('dashboard-popup')">Close</button>
+    </div>
+  </div>
+
+  <!-- Leaderboard Popup -->
+  <div id="leaderboard-popup" style="display:none;">
+    <div class="modal-box">
+      <h2>🏆 Leaderboard</h2>
+      <div id="leaderboard-content"></div>
+      <button onclick="closeModal('leaderboard-popup')">Close</button>
+    </div>
+  </div>
+
+  <!-- Settings Popup -->
+  <div id="settings-popup" style="display:none;">
+    <div class="modal-box">
+      <h2>⚙️ Settings</h2>
+      <div class="setting-item">
+        <span>🔊 Sound Effects</span>
+        <label class="radio-switch">
+          <input type="checkbox" id="sound-toggle" checked onchange="toggleSound()">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-item">
+        <span>🎵 Music</span>
+        <label class="radio-switch">
+          <input type="checkbox" id="music-toggle" checked onchange="toggleMusic()">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <button onclick="closeModal('settings-popup')">Close</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
