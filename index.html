@@ -302,25 +302,25 @@
   </div>
 
   <!-- Dashboard Popup -->
-  <div id="dashboard-popup" style="display:none;">
+  <div id="dashboard-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
       <h2>📊 Dashboard</h2>
       <div id="dashboard-content"></div>
-      <button onclick="closeModal('dashboard-popup')">Close</button>
+      <!-- <p style="color: #555; font-size: 0.8rem;">Click ouside to close</p> -->
     </div>
   </div>
 
   <!-- Leaderboard Popup -->
-  <div id="leaderboard-popup" style="display:none;">
+  <div id="leaderboard-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
       <h2>🏆 Leaderboard</h2>
       <div id="leaderboard-content"></div>
-      <button onclick="closeModal('leaderboard-popup')">Close</button>
+      <!-- <p style="color: #555; font-size: 0.8rem;">Click outside to close</p> -->
     </div>
   </div>
 
   <!-- Settings Popup -->
-  <div id="settings-popup" style="display:none;">
+  <div id="settings-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
       <h2>⚙️ Settings</h2>
       <div class="setting-item">

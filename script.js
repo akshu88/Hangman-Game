@@ -132,6 +132,89 @@ function init() {
 
 // Start the game
 init();
+// ---- HOME SCREEN ANIMATION ----
+const homeCanvas = document.getElementById("home-canvas");
+const homeCtx = homeCanvas.getContext("2d");
+
+const homeParts = [
+  // Head
+  () => {
+    homeCtx.beginPath();
+    homeCtx.arc(130, 70, 20, 0, Math.PI * 2);
+    homeCtx.strokeStyle = "#6c63ff";
+    homeCtx.stroke();
+  },
+  // Body
+  () => {
+    homeCtx.beginPath();
+    homeCtx.moveTo(130, 90); homeCtx.lineTo(130, 160);
+    homeCtx.strokeStyle = "#6c63ff";
+    homeCtx.stroke();
+  },
+  // Left Arm
+  () => {
+    homeCtx.beginPath();
+    homeCtx.moveTo(130, 110); homeCtx.lineTo(100, 140);
+    homeCtx.strokeStyle = "#6c63ff";
+    homeCtx.stroke();
+  },
+  // Right Arm
+  () => {
+    homeCtx.beginPath();
+    homeCtx.moveTo(130, 110); homeCtx.lineTo(160, 140);
+    homeCtx.strokeStyle = "#6c63ff";
+    homeCtx.stroke();
+  },
+  // Left Leg
+  () => {
+    homeCtx.beginPath();
+    homeCtx.moveTo(130, 160); homeCtx.lineTo(100, 200);
+    homeCtx.strokeStyle = "#6c63ff";
+    homeCtx.stroke();
+  },
+  // Right Leg
+  () => {
+    homeCtx.beginPath();
+    homeCtx.moveTo(130, 160); homeCtx.lineTo(160, 200);
+    homeCtx.strokeStyle = "#6c63ff";
+    homeCtx.stroke();
+  }
+];
+
+let homeStep = 0;
+
+function drawHomeGallows() {
+  homeCtx.clearRect(0, 0, homeCanvas.width, homeCanvas.height);
+  homeCtx.strokeStyle = "#6c63ff";
+  homeCtx.lineWidth = 4;
+  homeCtx.beginPath();
+  homeCtx.moveTo(20, 240); homeCtx.lineTo(180, 240);
+  homeCtx.moveTo(60, 240); homeCtx.lineTo(60, 20);
+  homeCtx.moveTo(60, 20); homeCtx.lineTo(130, 20);
+  homeCtx.moveTo(130, 20); homeCtx.lineTo(130, 50);
+  homeCtx.stroke();
+}
+
+function animateHome() {
+  if (homeStep === 0) {
+    drawHomeGallows();
+  }
+  if (homeStep < homeParts.length) {
+    homeParts[homeStep]();
+    homeStep++;
+  } else {
+    setTimeout(() => {
+      homeStep = 0;
+      drawHomeGallows();
+    }, 1000);
+    return;
+  }
+  setTimeout(animateHome, 500);
+}
+
+// Start the animation
+animateHome();
+
 
 // ---- DRAW FUNCTIONS ----
 function drawGallows() {
@@ -194,6 +277,80 @@ function updateCanvas() {
   drawGallows();
   for (let i = 0; i < wrongGuesses; i++) {
     drawSteps[i]();
+  }
+  // If all parts drawn, start swinging
+  if (wrongGuesses >= maxWrong) {
+    startSwing();
+  }
+}
+
+// ---- SWING ANIMATION ----
+let swingAngle = 0;
+let swingDirection = 1;
+let swingInterval = null;
+
+function startSwing() {
+  // Clear any existing swing
+  if (swingInterval) clearInterval(swingInterval);
+
+  swingInterval = setInterval(() => {
+    // Clear and redraw gallows
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGallows();
+
+    // Save canvas state and rotate around rope point
+    ctx.save();
+    ctx.translate(130, 50); // rope point
+    ctx.rotate((swingAngle * Math.PI) / 180);
+
+    // Draw all body parts shifted to origin
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 4;
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(0, 20, 20, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Body
+    ctx.beginPath();
+    ctx.moveTo(0, 40); ctx.lineTo(0, 110);
+    ctx.stroke();
+
+    // Left Arm
+    ctx.beginPath();
+    ctx.moveTo(0, 60); ctx.lineTo(-30, 90);
+    ctx.stroke();
+
+    // Right Arm
+    ctx.beginPath();
+    ctx.moveTo(0, 60); ctx.lineTo(30, 90);
+    ctx.stroke();
+
+    // Left Leg
+    ctx.beginPath();
+    ctx.moveTo(0, 110); ctx.lineTo(-30, 150);
+    ctx.stroke();
+
+    // Right Leg
+    ctx.beginPath();
+    ctx.moveTo(0, 110); ctx.lineTo(30, 150);
+    ctx.stroke();
+
+    ctx.restore();
+
+    // Update swing angle
+    swingAngle += swingDirection * 2;
+    if (swingAngle > 15) swingDirection = -1;
+    if (swingAngle < -15) swingDirection = 1;
+
+  }, 30);
+}
+
+function stopSwing() {
+  if (swingInterval) {
+    clearInterval(swingInterval);
+    swingInterval = null;
   }
 }
 
@@ -344,6 +501,7 @@ function closePopupAndHome() {
 }
 
 function showDashboard() {
+  closeAllModals();
   const content = document.getElementById("dashboard-content");
   content.innerHTML = `
     <div class="leaderboard-item"><span>👤 Player</span><span>${playerName}</span></div>
@@ -356,6 +514,7 @@ function showDashboard() {
 }
 
 function showLeaderboard() {
+  closeAllModals();
   const content = document.getElementById("leaderboard-content");
   const allStats = [];
   for (let key in localStorage) {
@@ -376,21 +535,30 @@ function showLeaderboard() {
   document.getElementById("leaderboard-popup").style.display = "flex";
 }
 
+function closeAllModals() {
+  document.getElementById("dashboard-popup").style.display = "none";
+  document.getElementById("leaderboard-popup").style.display = "none";
+  document.getElementById("settings-popup").style.display = "none";
+}
+
 function showSettings() {
-  document.getElementById("sound-btn").textContent = soundOn ? "ON" : "OFF";
-  document.getElementById("music-btn").textContent = musicOn ? "ON" : "OFF";
+  closeAllModals();
+  document.getElementById("sound-toggle").checked = soundOn;
+  document.getElementById("music-toggle").checked = musicOn;
   document.getElementById("settings-popup").style.display = "flex";
 }
 
 function toggleSound() {
   soundOn = !soundOn;
-  document.getElementById("sound-btn").textContent = soundOn ? "ON" : "OFF";
 }
 
 function toggleMusic() {
   musicOn = !musicOn;
-  document.getElementById("music-btn").textContent = musicOn ? "ON" : "OFF";
 }
+
+// function closeAllModals() {
+//   document.getElementById(id).style.display = "none";
+// }
 
 function closeModal(id) {
   document.getElementById(id).style.display = "none";
