@@ -332,3 +332,63 @@ canvas {
 .popup-buttons button:last-child:hover {
   background: #333;
 }
+
+/* Modal Popups */
+#dashboard-popup,
+#leaderboard-popup,
+#settings-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  cursor: pointer;
+}
+
+.modal-box {
+  background: #1a1a1a;
+  border: 2px solid #6c63ff;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 360px;
+  width: 90%;
+  cursor: default;
+}
+
+.modal-box h2 {
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.modal-box button {
+  padding: 10px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+.modal-box button:hover {
+  background: #574fd6;
+}
+
+/* Home Canvas Animation */
+#home-canvas {
+  background: #1a1a1a;
+  border: 2px solid #2e2e2e;
+  border-radius: 8px;
+}
