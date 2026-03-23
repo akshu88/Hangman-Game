@@ -1,17 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hangman Game</title>
   <link rel="stylesheet" href="style.css">
-</head>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    body {
+      display: flex;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      min-height: 100vh;
+    }
+
+    /* ── RIGHT SIDEBAR ── */
+    #top-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 190px;
+      min-height: 100vh;
+      padding: 24px 15px;
+      background-color: #1a1a2e;
+      position: fixed;
+      right: 0;
+      top: 0;
+    }
+
+    #top-bar h1 {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 30px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    #top-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .top-btn {
+      width: 100%;
+      text-align: left;
+      padding: 11px 14px;
+      border: none;
+      border-radius: 8px;
+      background-color: #16213e;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .top-btn:hover { background-color: #0f3460; }
+
+    .top-btn.logout {
+      background-color: #7b2d2d;
+      margin-top: 20px;
+    }
+
+    .top-btn.logout:hover { background-color: #a33a3a; }
+
+    /* ── MAIN CONTENT ── */
+    #main-content {
+      margin-right: 190px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    #player-name { display: none; }
+
+    /* ── HANGMAN ICON ── */
+    #hangman-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 44px;
+    }
+
+    #hangman-icon canvas {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+    }
+
+    #hangman-icon h2 {
+      margin-top: 14px;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #1a1a2e;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── CATEGORY SECTION ── */
+    #category-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      margin-bottom: 44px;
+    }
+
+    #category-screen h2 {
+      font-weight: 900;
+      font-size: 1.7rem;
+      margin-bottom: 22px;
+      color: #1a1a2e;
+      border-left: 6px solid #0f3460;
+      padding-left: 14px;
+      letter-spacing: 1px;
+      align-self: flex-start;
+    }
+
+    .category-btn {
+      display: block;
+      width: 100%;
+      padding: 15px 24px;
+      margin-bottom: 14px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-align: left;
+      background-color: #16213e;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .category-btn:hover {
+      background-color: #0f3460;
+      transform: translateX(6px);
+    }
+
+    /* ── STATS SECTION ── */
+    #stats-title {
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: #1a1a2e;
+      border-left: 6px solid #e94560;
+      padding-left: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    #dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .dash-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 10px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.10);
+      transition: transform 0.15s;
+    }
+
+    .dash-item:hover { transform: translateY(-4px); }
+    .dash-icon { font-size: 2rem; margin-bottom: 8px; }
+
+    .dash-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .dash-value {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #1a1a2e;
+    }
+
+    /* ── OTHER SCREENS ── */
+    #level-screen, #game-screen {
+      display: none;
+      margin-right: 200px;
+      padding: 30px 40px;
+    }
+
+    /* ── POPUPS ── */
+    #dashboard-popup, #leaderboard-popup, #settings-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      min-width: 320px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
 <body>
 
+  <!-- RIGHT SIDEBAR -->
   <div id="top-bar">
-    <h1>Hangman Game</h1>
+    <h1>🎮 Hangman</h1>
     <div id="top-buttons">
       <button class="top-btn" onclick="showDashboard()">📊 Dashboard</button>
       <button class="top-btn" onclick="showLeaderboard()">🏆 Leaderboard</button>
@@ -19,25 +235,62 @@
       <button class="top-btn logout" onclick="logout()">🚪 Logout</button>
     </div>
   </div>
+
   <p id="player-name"></p>
 
-  <!-- Category Selection -->
-  <div id="category-screen">
-    <canvas id="home-canvas" width="200" height="250"></canvas>
-    <h2>Choose a Category</h2>
-    <button class="category-btn" onclick="showLevelScreen('computer')">💻 Computer Fundamentals</button>
-    <button class="category-btn" onclick="showLevelScreen('lifestyle')">🏃 Lifestyle</button>
+  <!-- MAIN CONTENT -->
+  <div id="main-content">
+
+    <!-- 1. HANGMAN ICON CENTERED -->
+    <div id="hangman-icon">
+      <canvas id="hangman-preview" width="170" height="210"></canvas>
+      <h2>🪢 Hangman Game</h2>
+    </div>
+
+    <!-- 2. CHOOSE A CATEGORY -->
+    <div id="category-screen">
+      <h2>Choose a Category</h2>
+      <button class="category-btn" onclick="showLevelScreen('computer')">💻 Computer Fundamentals</button>
+      <button class="category-btn" onclick="showLevelScreen('lifestyle')">🏃 Lifestyle</button>
+    </div>
+
+    <!-- 3. STATS BELOW CATEGORIES -->
+    <div id="stats-title">📈 Your Stats</div>
+    <div id="dashboard">
+      <div class="dash-item">
+        <span class="dash-icon">⭐</span>
+        <span class="dash-label">Level</span>
+        <span class="dash-value" id="dash-level">1</span>
+      </div>
+      <div class="dash-item">
+        <span class="dash-icon">🪙</span>
+        <span class="dash-label">Coins</span>
+        <span class="dash-value" id="dash-coins">0</span>
+      </div>
+      <div class="dash-item">
+        <span class="dash-icon">🏆</span>
+        <span class="dash-label">Wins</span>
+        <span class="dash-value" id="dash-wins">0</span>
+      </div>
+      <div class="dash-item">
+        <span class="dash-icon">❌</span>
+        <span class="dash-label">Losses</span>
+        <span class="dash-value" id="dash-losses">0</span>
+      </div>
+    </div>
+
   </div>
 
   <!-- Level Selection Screen -->
-  <div id="level-screen" style="display:none;">
+  <div id="level-screen">
     <h2>Select Level</h2>
     <p id="level-category-name"></p>
     <div id="level-grid"></div>
     <button class="back-btn" onclick="showCategories()">⬅ Back</button>
   </div>
+
   <!-- Game Screen -->
-  <div id="game-screen" style="display:none;">
+  <div id="game-screen">
     <p id="riddle-text"></p>
     <canvas id="hangman-canvas" width="200" height="250"></canvas>
     <p id="wrong-count">Wrong guesses: 0 / 6</p>
@@ -48,29 +301,6 @@
     <button id="logout-btn" onclick="logout()">Logout</button>
   </div>
 
-  <!-- Dashboard -->
-  <div id="dashboard">
-    <div class="dash-item">
-      <span class="dash-icon">⭐</span>
-      <span class="dash-label">Level</span>
-      <span class="dash-value" id="dash-level">1</span>
-    </div>
-    <div class="dash-item">
-      <span class="dash-icon">🪙</span>
-      <span class="dash-label">Coins</span>
-      <span class="dash-value" id="dash-coins">0</span>
-    </div>
-    <div class="dash-item">
-      <span class="dash-icon">🏆</span>
-      <span class="dash-label">Wins</span>
-      <span class="dash-value" id="dash-wins">0</span>
-    </div>
-    <div class="dash-item">
-      <span class="dash-icon">❌</span>
-      <span class="dash-label">Losses</span>
-      <span class="dash-value" id="dash-losses">0</span>
-    </div>
-  </div>
   <!-- Dashboard Popup -->
   <div id="dashboard-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
@@ -110,7 +340,40 @@
       <button onclick="closeModal('settings-popup')">Close</button>
     </div>
   </div>
+
+  <script>
+    const previewCanvas = document.getElementById('hangman-preview');
+    const ctx = previewCanvas.getContext('2d');
+    ctx.strokeStyle = '#1a1a2e';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    // Gallows
+    ctx.beginPath();
+    ctx.moveTo(20, 195); ctx.lineTo(150, 195);
+    ctx.moveTo(65, 195); ctx.lineTo(65, 20);
+    ctx.moveTo(65, 20);  ctx.lineTo(120, 20);
+    ctx.moveTo(120, 20); ctx.lineTo(120, 48);
+    ctx.stroke();
+    // Head
+    ctx.beginPath();
+    ctx.arc(120, 62, 15, 0, Math.PI * 2);
+    ctx.stroke();
+    // Body
+    ctx.beginPath();
+    ctx.moveTo(120, 77); ctx.lineTo(120, 130);
+    ctx.stroke();
+    // Arms
+    ctx.beginPath();
+    ctx.moveTo(120, 92); ctx.lineTo(92, 114);
+    ctx.moveTo(120, 92); ctx.lineTo(148, 114);
+    ctx.stroke();
+    // Legs
+    ctx.beginPath();
+    ctx.moveTo(120, 130); ctx.lineTo(92, 162);
+    ctx.moveTo(120, 130); ctx.lineTo(148, 162);
+    ctx.stroke();
+  </script>
+
   <script src="script.js"></script>
 </body>
-
 </html>
