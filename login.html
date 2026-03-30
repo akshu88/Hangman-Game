@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman - Login</title>
     <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
     <div class="login-card">
-
         <!-- Logo/Title-->
         <div class="logo">
-            <span class="hangman-icon"></span>
+            <span class="hangman-icon">🪢</span>
             <h1>Hangman Game</h1>
-            <p> Sign in to play the game!</p>
+            <p>Sign in to play the game!</p>
         </div>
 
         <!-- Login Form -->
@@ -25,8 +22,8 @@
         </div>
 
         <div class="form-group">
-            <label for="password"></label>
-            <input type="text" id="password" placeholder="Enter your passoword" />
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" />
         </div>
 
         <!-- Error message -->
@@ -40,17 +37,15 @@
             <span>or</span>
         </div>
 
-        <!--Google Sign-in Button-->
-        <button class="btn-google" onclick="handleGoogle">
+        <!-- Google Sign-in Button -->
+        <button class="btn-google" onclick="handleGoogle()">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
             Continue with Google
         </button>
 
-        <!--Sign up link-->
+        <!-- Sign up link-->
         <p class="signup-text">Don't have an account? <a href="signup.html">Sign up</a></p>
     </div>
-
     <script src="login.js"></script>
 </body>
-
 </html>

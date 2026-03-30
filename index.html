@@ -11,11 +11,11 @@
     body {
       display: flex;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f4f8;
+      background-color: #0f0f0f;
       min-height: 100vh;
+      color: #ffffff;
     }
 
-    /* ── RIGHT SIDEBAR ── */
     #top-bar {
       display: flex;
       flex-direction: column;
@@ -67,7 +67,6 @@
 
     .top-btn.logout:hover { background-color: #a33a3a; }
 
-    /* ── MAIN CONTENT ── */
     #main-content {
       margin-right: 190px;
       flex: 1;
@@ -79,7 +78,6 @@
 
     #player-name { display: none; }
 
-    /* ── HANGMAN ICON ── */
     #hangman-icon {
       display: flex;
       flex-direction: column;
@@ -88,21 +86,20 @@
     }
 
     #hangman-icon canvas {
-      background: #fff;
+      background: #1a1a2e;
       border-radius: 18px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
 
     #hangman-icon h2 {
       margin-top: 14px;
       font-size: 1.8rem;
       font-weight: 900;
-      color: #1a1a2e;
+      color: #ffffff;
       letter-spacing: 3px;
       text-transform: uppercase;
     }
 
-    /* ── CATEGORY SECTION ── */
     #category-screen {
       display: flex;
       flex-direction: column;
@@ -116,8 +113,8 @@
       font-weight: 900;
       font-size: 1.7rem;
       margin-bottom: 22px;
-      color: #1a1a2e;
-      border-left: 6px solid #0f3460;
+      color: #ffffff;
+      border-left: 6px solid #6c63ff;
       padding-left: 14px;
       letter-spacing: 1px;
       align-self: flex-start;
@@ -131,9 +128,9 @@
       font-size: 1.15rem;
       font-weight: 800;
       text-align: left;
-      background-color: #16213e;
+      background-color: #1a1a2e;
       color: #fff;
-      border: none;
+      border: 2px solid #6c63ff;
       border-radius: 12px;
       cursor: pointer;
       transition: background 0.2s, transform 0.15s;
@@ -141,16 +138,15 @@
     }
 
     .category-btn:hover {
-      background-color: #0f3460;
+      background-color: #6c63ff;
       transform: translateX(6px);
     }
 
-    /* ── STATS SECTION ── */
     #stats-title {
       font-weight: 900;
       font-size: 1.5rem;
-      color: #1a1a2e;
-      border-left: 6px solid #e94560;
+      color: #ffffff;
+      border-left: 6px solid #ff5c5c;
       padding-left: 12px;
       letter-spacing: 1px;
       margin-bottom: 16px;
@@ -171,11 +167,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #fff;
+      background: #1a1a2e;
       border-radius: 14px;
       padding: 18px 10px;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.10);
+      box-shadow: 0 3px 14px rgba(0,0,0,0.3);
       transition: transform 0.15s;
+      border: 1px solid #2e2e4e;
     }
 
     .dash-item:hover { transform: translateY(-4px); }
@@ -184,7 +181,7 @@
     .dash-label {
       font-size: 0.85rem;
       font-weight: 700;
-      color: #777;
+      color: #888;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 6px;
@@ -193,34 +190,189 @@
     .dash-value {
       font-size: 1.6rem;
       font-weight: 900;
-      color: #1a1a2e;
+      color: #6c63ff;
     }
 
-    /* ── OTHER SCREENS ── */
-    #level-screen, #game-screen {
+    #level-screen {
       display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-right: 200px;
+      padding: 30px 40px;
+      color: #ffffff;
+    }
+
+    #level-screen h2 {
+      font-size: 1.8rem;
+      color: #6c63ff;
+    }
+
+    #level-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      max-width: 500px;
+    }
+
+    .level-btn {
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 2px solid #6c63ff;
+      border-radius: 10px;
+      background: #1a1a2e;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-width: 100px;
+    }
+
+    .level-btn:hover { background: #6c63ff; }
+
+    .level-btn.locked {
+      border-color: #2e2e2e;
+      color: #444;
+      cursor: not-allowed;
+    }
+
+    .level-btn.locked:hover { background: #1a1a2e; }
+
+    .back-btn {
+      padding: 10px 24px;
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background: #333; }
+
+    #game-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
       margin-right: 200px;
       padding: 30px 40px;
     }
 
-    /* ── POPUPS ── */
+    #hint-btn {
+      padding: 10px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #f5a623;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      transition: background 0.2s;
+      font-weight: 700;
+    }
+
+    #hint-btn:hover { background: #d4891a; }
+
+    #hint-btn:disabled {
+      background: #2a2a2a;
+      color: #444;
+      cursor: not-allowed;
+    }
+
     #dashboard-popup, #leaderboard-popup, #settings-popup {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       z-index: 999;
       justify-content: center;
       align-items: center;
     }
 
     .modal-box {
-      background: #fff;
+      background: #1a1a2e;
+      border: 2px solid #6c63ff;
       border-radius: 16px;
       padding: 32px;
       min-width: 320px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      color: #ffffff;
     }
+
+    .modal-box h2 {
+      margin-bottom: 16px;
+      color: #6c63ff;
+    }
+
+    .modal-box button {
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: #6c63ff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    .modal-box button:hover { background: #574fd6; }
+
+    .leaderboard-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #2e2e4e;
+      font-size: 0.95rem;
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #2e2e4e;
+    }
+
+    .radio-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .radio-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #2e2e2e;
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    input:checked + .slider { background-color: #6c63ff; }
+    input:checked + .slider:before { transform: translateX(20px); }
   </style>
 </head>
 <body>
@@ -241,20 +393,17 @@
   <!-- MAIN CONTENT -->
   <div id="main-content">
 
-    <!-- 1. HANGMAN ICON CENTERED -->
     <div id="hangman-icon">
       <canvas id="hangman-preview" width="170" height="210"></canvas>
       <h2>🪢 Hangman Game</h2>
     </div>
 
-    <!-- 2. CHOOSE A CATEGORY -->
     <div id="category-screen">
       <h2>Choose a Category</h2>
       <button class="category-btn" onclick="showLevelScreen('computer')">💻 Computer Fundamentals</button>
       <button class="category-btn" onclick="showLevelScreen('lifestyle')">🏃 Lifestyle</button>
     </div>
 
-    <!-- 3. STATS BELOW CATEGORIES -->
     <div id="stats-title">📈 Your Stats</div>
     <div id="dashboard">
       <div class="dash-item">
@@ -281,46 +430,47 @@
 
   </div>
 
-  <!-- Level Selection Screen -->
+  <!-- LEVEL SCREEN -->
   <div id="level-screen">
     <h2>Select Level</h2>
-    <p id="level-category-name"></p>
+    <p id="level-category-name" style="color:#888"></p>
     <div id="level-grid"></div>
     <button class="back-btn" onclick="showCategories()">⬅ Back</button>
   </div>
 
-  <!-- Game Screen -->
+  <!-- GAME SCREEN -->
   <div id="game-screen">
     <p id="riddle-text"></p>
     <canvas id="hangman-canvas" width="200" height="250"></canvas>
     <p id="wrong-count">Wrong guesses: 0 / 6</p>
     <div id="word-display"></div>
+    <button id="hint-btn" onclick="useHint()">💡 Hint (-5 coins)</button>
     <div id="keyboard"></div>
     <p id="message"></p>
     <button id="restart-btn" onclick="showCategories()">Choose Another Category</button>
     <button id="logout-btn" onclick="logout()">Logout</button>
   </div>
 
-  <!-- Dashboard Popup -->
-  <div id="dashboard-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
+  <!-- DASHBOARD POPUP -->
+  <div id="dashboard-popup" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
       <h2>📊 Dashboard</h2>
       <div id="dashboard-content"></div>
-      <!-- <p style="color: #555; font-size: 0.8rem;">Click ouside to close</p> -->
+      <button onclick="closeAllModals()">Close</button>
     </div>
   </div>
 
-  <!-- Leaderboard Popup -->
-  <div id="leaderboard-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
+  <!-- LEADERBOARD POPUP -->
+  <div id="leaderboard-popup" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
       <h2>🏆 Leaderboard</h2>
       <div id="leaderboard-content"></div>
-      <!-- <p style="color: #555; font-size: 0.8rem;">Click outside to close</p> -->
+      <button onclick="closeAllModals()">Close</button>
     </div>
   </div>
 
-  <!-- Settings Popup -->
-  <div id="settings-popup" style="display:none;" onclick="if(event.target===this) closeAllModals()">
+  <!-- SETTINGS POPUP -->
+  <div id="settings-popup" onclick="if(event.target===this) closeAllModals()">
     <div class="modal-box">
       <h2>⚙️ Settings</h2>
       <div class="setting-item">
@@ -343,35 +493,30 @@
 
   <script>
     const previewCanvas = document.getElementById('hangman-preview');
-    const ctx = previewCanvas.getContext('2d');
-    ctx.strokeStyle = '#1a1a2e';
-    ctx.lineWidth = 4;
-    ctx.lineCap = 'round';
-    // Gallows
-    ctx.beginPath();
-    ctx.moveTo(20, 195); ctx.lineTo(150, 195);
-    ctx.moveTo(65, 195); ctx.lineTo(65, 20);
-    ctx.moveTo(65, 20);  ctx.lineTo(120, 20);
-    ctx.moveTo(120, 20); ctx.lineTo(120, 48);
-    ctx.stroke();
-    // Head
-    ctx.beginPath();
-    ctx.arc(120, 62, 15, 0, Math.PI * 2);
-    ctx.stroke();
-    // Body
-    ctx.beginPath();
-    ctx.moveTo(120, 77); ctx.lineTo(120, 130);
-    ctx.stroke();
-    // Arms
-    ctx.beginPath();
-    ctx.moveTo(120, 92); ctx.lineTo(92, 114);
-    ctx.moveTo(120, 92); ctx.lineTo(148, 114);
-    ctx.stroke();
-    // Legs
-    ctx.beginPath();
-    ctx.moveTo(120, 130); ctx.lineTo(92, 162);
-    ctx.moveTo(120, 130); ctx.lineTo(148, 162);
-    ctx.stroke();
+    const pctx = previewCanvas.getContext('2d');
+    pctx.strokeStyle = '#6c63ff';
+    pctx.lineWidth = 4;
+    pctx.lineCap = 'round';
+    pctx.beginPath();
+    pctx.moveTo(20, 195); pctx.lineTo(150, 195);
+    pctx.moveTo(65, 195); pctx.lineTo(65, 20);
+    pctx.moveTo(65, 20);  pctx.lineTo(120, 20);
+    pctx.moveTo(120, 20); pctx.lineTo(120, 48);
+    pctx.stroke();
+    pctx.beginPath();
+    pctx.arc(120, 62, 15, 0, Math.PI * 2);
+    pctx.stroke();
+    pctx.beginPath();
+    pctx.moveTo(120, 77); pctx.lineTo(120, 130);
+    pctx.stroke();
+    pctx.beginPath();
+    pctx.moveTo(120, 92); pctx.lineTo(92, 114);
+    pctx.moveTo(120, 92); pctx.lineTo(148, 114);
+    pctx.stroke();
+    pctx.beginPath();
+    pctx.moveTo(120, 130); pctx.lineTo(92, 162);
+    pctx.moveTo(120, 130); pctx.lineTo(148, 162);
+    pctx.stroke();
   </script>
 
   <script src="script.js"></script>
